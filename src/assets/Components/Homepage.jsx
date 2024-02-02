@@ -11,9 +11,9 @@ import AddData from "./AddData"
 
 export default function Homepage() {
 
-    const [pData, setPData] = useState(data);
+    // const [pData, setPData] = useState(data); // for testing local data
     const [contacts, setContacts] = useState([]);
-
+    const [visiblemodal ,setVisibleModal ] = useState(false);
     //earlier getting local data --> import { data } from "../../../public/data"
     // now fetching it from firebase
     useEffect( ()=> {
@@ -41,7 +41,7 @@ export default function Homepage() {
         <>
             <Navbar />
            
-            <div className="main w-full h-[100vh] p-4 relative" style={{ backgroundColor: "rgb(71,77,82)" }}>
+            <div className="main w-full p-4 relative" style={{ backgroundColor: "rgb(71,77,82)" }}>
 
                 <div className="topSection flex justify-center"  >
 
@@ -58,7 +58,8 @@ export default function Homepage() {
                     <input className="bg-transparent border-2 pl-3 text-white border-black mr-2 rounded-md" />
                     
                     <div className="addbtn flex">
-                        <div className="cloudIcon flex justify-center align-middle cursor-pointer p-[2px] text-3xl bg-white  rounded-full">
+                        <div onClick={() => {setVisibleModal(true)}} 
+                        className="cloudIcon flex justify-center align-middle cursor-pointer p-[2px] text-3xl bg-white  rounded-full">
                             <FontAwesomeIcon icon={faCirclePlus} />
                         </div>
                     </div>
@@ -77,12 +78,15 @@ export default function Homepage() {
                 </div>
                 {/* Prerson List Section end .............*/}
                 
-                <div className="addData absolute w-full flex justify-center">
-                    <div className="  relative -translate-y-52">
 
-                        <AddData />
+                {/* Add data from user frontend */}
+                <div className="addData absolute top-4 right-0 left-0 z-50 w-full flex justify-center">
+                    <div className="  ">
+
+                        <AddData visiblemodal={visiblemodal} setVisibleModal={setVisibleModal} />
                     </div>
                 </div>
+                {/* end Add data from user frontend end ------------*/}
 
             </div>
         </>
