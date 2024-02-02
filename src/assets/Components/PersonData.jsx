@@ -7,7 +7,6 @@ export default function PersonData(props) {
         <>
             <div className="main flex justify-center m-2">
 
-
                 <div className="maininsider flex rounded-md  px-2  p-2 w-full sm:w-80 align-middle"
                     style={{ backgroundColor: "rgb(255,234,174)" }}>
 
@@ -18,6 +17,7 @@ export default function PersonData(props) {
                     <div className="rightSideData w-full flex pl-3  pb-1">
 
                         <div className="data">
+                            {/* {console.log("id -> "+ props.item.id)} */}
                             <h1 className="text-md font-bold"> {props.item.name} </h1>
                             <p className="text-sm "> {props.item.email}</p>
                             <p className="text-sm "> {props.item.author}</p>
