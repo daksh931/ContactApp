@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloud, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { data } from "../../../public/data"
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, onSnapshot } from "firebase/firestore"
 import { db } from "../../config/firebase"
 import AddData from "./AddData"
 
@@ -19,17 +19,22 @@ export default function Homepage() {
     //earlier getting local data --> import { data } from "../../../public/data"
     // now fetching it from firebase
     useEffect(() => {
-        const getContacts = async () => {
+        const getContacts = () => {
             try {
-                const conatacts = collection(db, "contacts");
-                const contactsSnapshot = await getDocs(conatacts);
-                const contactList = contactsSnapshot.docs.map((doc) => {
-                    return {
-                        id: doc.id,
-                        ...doc.data(),
-                    }
+                const conatactsRef = collection(db, "contacts");
+
+                // const contactsSnapshot = await getDocs(conatacts);
+                onSnapshot(conatactsRef,(snapshot) => {
+
+                    const contactList = snapshot.docs.map((doc) => {
+                        return {
+                            id: doc.id,
+                            ...doc.data(),
+                        };
+                    });
+                    
+                    setContacts(contactList);
                 });
-                setContacts(contactList);
             }
 
             catch (error) {
@@ -39,6 +44,28 @@ export default function Homepage() {
         getContacts();
     }, [])
 
+    const filterContacts = (e)=>{
+        const value = e.target.value;
+
+
+        const contactsRef = collection(db,"contacts");
+
+        onSnapshot(contactsRef,(snapshot) => {
+            const contactList = snapshot.docs.map( (doc)=> {
+                return{
+                    id:doc.id,
+                    ...doc.data(),
+                };
+            });
+
+            const filteredContact = contactList.filter( (contact)=>
+                contact.name.toLowerCase().includes(value.toLowerCase())
+            );
+            setContacts(filteredContact);
+            return filteredContact
+
+        });
+    };
 
 
     return (
@@ -60,7 +87,7 @@ export default function Homepage() {
                 {/* Search Bar Section  */}
                 <div className="searchBar pt-3 bg-none flex justify-center">
                     {/* <IoSearchOutline /> */}
-                    <input className="bg-transparent border-2 pl-3 text-white border-black mr-2 rounded-md" />
+                    <input onChange={filterContacts} className="bg-transparent border-2 pl-3 text-white border-black mr-2 rounded-md" />
 
                     <div className="addbtn flex">
                         <div onClick={() => {
