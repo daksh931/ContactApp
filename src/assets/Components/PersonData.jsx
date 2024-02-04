@@ -1,25 +1,30 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
-import { deleteDoc, doc } from 'firebase/firestore'
+import { createElement, useEffect, useState } from 'react'
+import { collection, deleteDoc, doc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import Update from './Update'
+
 
 export default function PersonData(props) {
+    const [updateVisibleModal, setUpdateVisibleModal] = useState(false);
 
-    const handleDelete = async (id) => {
-        // const contactRef = collection(db, "contacts");
-        // await deleteDoc(contactRef,"contacts",id);
-        try {
-            
-            await deleteDoc(doc(db, "contacts", id));
-        } catch (error) {
-            console.log(error)
-        } 
-    }
+        const handleDelete = async () => {
+            try {
+                const contactRef = doc(db, "contacts", props.item.id);
+                await deleteDoc(contactRef);
+                console.log(props.item.id)
+                // await deleteDoc(doc(db, "contacts", id));
+            } catch (error) {
+                console.log("error - " + error)
+            }
+        }
+    
+    
 
     return (
         <>
-            <div className="main flex justify-center m-2">
+            <div key={props.item.id} className="main flex justify-center m-2">
 
                 <div className="maininsider flex rounded-md  px-2  p-2 w-full sm:w-80 align-middle"
                     style={{ backgroundColor: "rgb(255,234,174)" }}>
@@ -34,23 +39,32 @@ export default function PersonData(props) {
                             {/* {console.log("id -> "+ props.item.id)} */}
                             <h1 className="text-md font-bold"> {props.item.name} </h1>
                             <p className="text-sm "> {props.item.email}</p>
-                            <p className="text-sm "> {props.item.author}</p>
+                            <p className="text-sm "> {props.item.Author}</p>
 
                         </div>
                         <div className="btn text-xl cursor-pointer w-full p-2 flex justify-end items-center">
-                            <div className="edit">
-                                <FontAwesomeIcon className='px-1 pr-2' icon={faPenToSquare} />
+                            <div className="edit" 
+                                >
+                                <FontAwesomeIcon onClick={()=> { setUpdateVisibleModal(true)}}  
+                                
+                                className='px-1 pr-2' icon={faPenToSquare} />
+                              
                             </div>
                             <div className="delete" >
-                                <FontAwesomeIcon onClick={() => handleDelete(props.item.id)} className='pl-1' icon={faTrashCan} />
+                                <FontAwesomeIcon onClick={() => { handleDelete(props.item.id) }} className='pl-1' icon={faTrashCan} />
                             </div>
 
                         </div>
                     </div>
-
+                                
                 </div>
             </div>
-        </>
-    )
+            <div className="addData absolute top-4 right-0 left-0 z-50 w-full flex justify-center">
+                    <div className="  ">
 
-}
+                    <Update updateVisibleModal={updateVisibleModal} setUpdateVisibleModal={setUpdateVisibleModal} ID={props.item.id}/>
+                    </div>
+                    </div>                      
+        </>
+    );
+;}
