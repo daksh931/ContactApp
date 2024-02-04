@@ -1,7 +1,8 @@
 import Navbar from "./Navbar"
 import PersonData from "./PersonData"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloud, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { FaCloud } from "react-icons/fa";
+import { FaCirclePlus } from "react-icons/fa6";
+
 import { data } from "../../../public/data"
 import { useEffect, useState } from "react";
 import { collection, getDocs, onSnapshot } from "firebase/firestore"
@@ -77,8 +78,8 @@ export default function Homepage() {
                 <div className="topSection flex justify-center"  >
 
                     <div className="nameApp flex w-full sm:w-80 py-2 px-1 sm:p-2 font-semibold text-[17px] sm:text-xl bg-white rounded-lg justify-center align-middle">
-                        <div className="cloudIcon pr-2 ">
-                            <FontAwesomeIcon icon={faCloud} /> </div>
+                        <div className="cloudIcon pr-2 text-3xl">
+                            <FaCloud /> </div>
 
                         <h1> Firebase Contact App </h1>
                     </div>
@@ -95,8 +96,7 @@ export default function Homepage() {
                            
                         }}
                             className="cloudIcon flex justify-center align-middle cursor-pointer p-[2px] text-3xl bg-white  rounded-full">
-                            <FontAwesomeIcon icon={faCirclePlus}
-                            />
+                            <FaCirclePlus  />
                         </div>
                     </div>
                 </div>

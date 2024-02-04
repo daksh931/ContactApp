@@ -1,9 +1,7 @@
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { db } from "../../config/firebase";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-
+import { IoCloseSharp } from "react-icons/io5";
 
 export default function AddData({setVisibleModal, visiblemodal} ) {
     // props provide us  visiblemodal - setVisibleModal to show/hide Add data modal
@@ -61,7 +59,7 @@ export default function AddData({setVisibleModal, visiblemodal} ) {
             <div className={` main  leading-none bg-white  max-w-72 border-2 rounded-md border-blue-700  
             flex flex-col justify-center items-center pt-1 pb-6 px-2 ${visiblemodal ? "flex" : "hidden"}`}>
 
-                <div className="close flex self-end" onClick={() => { setVisibleModal(false) }}><FontAwesomeIcon className='text-xl cursor-pointer' icon={faWindowClose} /></div>
+                <div className="close flex self-end" onClick={() => { setVisibleModal(false) }}><IoCloseSharp  className='text-xl cursor-pointer'  /></div>
                 <form >
                     <div className="name ">
                         <label htmlFor="name" className=" leading-none pb-1 ">Name</label>
