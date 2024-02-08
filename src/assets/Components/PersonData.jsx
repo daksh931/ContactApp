@@ -62,7 +62,7 @@ export default function PersonData(props) {
                     <Update updateVisibleModal={updateVisibleModal} setUpdateVisibleModal={setUpdateVisibleModal} ID={props.item.id}/>
                     </div>
                     </div>      
-                    <div className=""></div>                
+                               
         </>
     );
 ;}
