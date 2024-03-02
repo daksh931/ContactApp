@@ -2,7 +2,7 @@ import Navbar from "./Navbar"
 import PersonData from "./PersonData"
 import { FaCloud } from "react-icons/fa";
 import { FaCirclePlus } from "react-icons/fa6";
-
+import React from "react";
 import { data } from "../../../public/data"
 import { useEffect, useState } from "react";
 import { collection, getDocs, onSnapshot } from "firebase/firestore"
